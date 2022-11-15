@@ -1,5 +1,12 @@
+# Load needed packages
+library(tidyr)
+library(dplyr)
+library(stringr)
+
+
 # set working directory and import dataset
 df<- read.csv("salary_survey.csv", header = T, sep=",")
+
 
 ## What are the issues associated with this dataset 
 # Colunn names are too long, need to change to code friendly names (i.e. one word to short phrase with words seperated by '.' or '_')
@@ -23,6 +30,19 @@ colnames(df)[18]<- "Race"
 
 
 # Column 1: We should slit this column into 2 columns: date and time 
-# 
+# To make data tidy, each of these should be split in to 3 columns (month, day, year & hour, minute, second)
+test<- as.data.frame(df[,1])
+test2<- test %>% separate(Timestamp, c("Date", "Time"))
+
+df[c('First', 'Last')] <- str_split_fixed(df$player, '_', 2)
+
+test2<- test[c('Date', 'Time')]<- str_split_fixed(test, ' ', 2)
+
+
+df2 <- data.frame(x = c(NA, "x.y", "x.z", "y.z"))
+df2 %>% separate(x, c("A", "B"))
+
+
+
 # 
 
