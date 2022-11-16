@@ -3,7 +3,6 @@ library(tidyr)
 library(dplyr)
 library(stringr)
 
-
 # set working directory and import dataset
 df<- read.csv("salary_survey.csv", header = T, sep=",")
 
@@ -31,7 +30,23 @@ colnames(df)[18]<- "Race"
 
 # Column 1: We should split this column into 2 columns: date and time 
 # To make data tidy, each of these should be split in to 3 columns (month, day, year & hour, minute, second)
-df2<- df %>% separate(Timestamp, c("Date", "Time"), sep=" ")
+df2<- df %>% tidyr::separate(Timestamp, c("Date", "Time"), sep=" ")
+
+# Group time data into hour intervals? 
+
+
+# Employment_Industry column is not consistent in its capitalization/style of answer. 
+# We will do two things 1.) Capitalize all important words and 2.) Summarize sentence responses
+# 1.)
+capitalized<- tools::toTitleCase(as.character(df2$Employment_Industry))
+
+df2['Employment_Industry'] <- capitalized
+
+#2.) 
 
 
 
+
+
+
+unique(df2$Employment_Industry)
