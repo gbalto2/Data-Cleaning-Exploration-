@@ -43,6 +43,7 @@ capitalized<- tools::toTitleCase(as.character(df2$Employment_Industry))
 df2['Employment_Industry'] <- capitalized
 
 #2.) 
+test<- as.data.frame(subset(df2, nchar(as.character(Employment_Industry)) >= 40))
 
 
 
