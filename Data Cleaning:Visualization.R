@@ -46,8 +46,29 @@ df2['Employment_Industry'] <- capitalized
 test<- as.data.frame(subset(df2, nchar(as.character(Employment_Industry)) >= 40))
 
 
+# We will also make the Job_Title column a consistent format
+capitalized2<- tools::toTitleCase(as.character(df2$Job_Title))
+
+df2['Job_Title'] <- capitalized2
+
+
+# Looking at the 'Salary' column, we see that some people entered in a shorthand version of their pay.
+# For example, instead of $58,000/year, they typed 58. We are going to assume that in these instances 
+# they meant X thousand/year. So, we need to add ',000' to cells that are formatted incorrectly (except
+# for cells that equal zero). 
+test<- as.data.frame(subset(df2, nchar(as.character(Salary)) <=2 ))
+
+my_string<- as.character(test$Salary)
+str(my_string)
+
+test<- df2 %>% subset(nchar(as.character(Salary)) ==2 & nchar(as.character(Salary))!=0) %>% 
+  str_pad(my_string, width=5, side="right", pad=0)
+
+test2<- test$Salary
+
+sprintf("%08d", test2)
 
 
 
+sprintf("%g",   1e6 * pi)
 
-unique(df2$Employment_Industry)
