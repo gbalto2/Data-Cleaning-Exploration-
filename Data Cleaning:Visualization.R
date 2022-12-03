@@ -58,17 +58,20 @@ df2['Job_Title'] <- capitalized2
 # for cells that equal zero). 
 test<- as.data.frame(subset(df2, nchar(as.character(Salary)) <=2 ))
 
-my_string<- as.character(test$Salary)
-str(my_string)
-
-test<- df2 %>% subset(nchar(as.character(Salary)) ==2 & nchar(as.character(Salary))!=0) %>% 
-  str_pad(my_string, width=5, side="right", pad=0)
-
-test2<- test$Salary
-
-sprintf("%08d", test2)
 
 
+test<- df2 %>% filter(nchar(as.character(Salary)) ==2) & nchar(as.character(Salary))!=0) %>% 
+  str_pad(width=5, side="right", pad=0)
 
-sprintf("%g",   1e6 * pi)
+# We also need to do this for values < 10,000. As the above function fills the cells to be 5 characters long,
+# we need to do the same with these values- adding zeros until values are 4 characters long. 
+test3<- df2 %>% filter(nchar(as.character(Salary)) ==2) 
+
+str_pad(df2$Salary, width=5, side = "right", pad="0")
+
+test5<- str_pad(df2, 5, side="right", pad="0")
+
+homer_fall$label<- sub("^", "n=", homer_fall$label)
+
+
 
